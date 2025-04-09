@@ -5,6 +5,8 @@
 ## Made by Joseph C.
 ##
 
+.PHONY: all clean fclean re debug
+
 SRC	=	src/error.c	\
 		src/my_bsq.c	\
 		src/first_line_with_nb.c	\
@@ -13,23 +15,32 @@ SRC	=	src/error.c	\
 		src/square_algo.c	\
 		src/total_lgth.c	\
 
-OBJ	=	$(SRC:.c=.o)
+OBJ	:=	$(SRC:.c=.o)
 
-CC	=	gcc
+CC	:=	gcc
+RM	:=	rm -f
 
-NAME	=	bsq
+NAME	:=	bsq
 
-CFLAGS	=	-W -Wall -Wextra -Iinclude
+CFLAGS	:=	-W -Wall -Wextra -Werror -Iinclude -O2
+DEBUGFLAGS :=	-g3 -ggdb
 
 all:	$(NAME)
 
 $(NAME):	$(OBJ)
-	$(CC) -o $(NAME) $(SRC) $(CFLAGS)
+	@$(CC) -o $(NAME) $(OBJ) $(CFLAGS) || (echo "Build failed" && exit 1)
+	@echo "Build successful"
+
+debug: CFLAGS += $(DEBUGFLAGS)
+debug: re
+
+%.o:	%.c
+	@$(CC) $(CFLAGS) -c $< -o $@ || (echo "Compilation of $< failed" && exit 1)
 
 clean:
-	rm -f $(OBJ)
+	$(RM) $(OBJ)
 
 fclean:	clean
-	rm -f $(NAME)
+	$(RM) $(NAME)
 
 re:	fclean all

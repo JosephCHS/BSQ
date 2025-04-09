@@ -9,14 +9,14 @@
 
 void	nb_line(char *str)
 {
-	int cnt = 0;
-	int line = 0;
+	int index = 0;
+	int line_number = 0;
 
-	while (str[cnt] != '\n') {
-		if (str[cnt] < '0' || str[cnt] > '9')
+	while (str[index] != '\n') {
+		if (str[index] < '0' || str[index] > '9')
 			exit(84);
-		line = line * 10;
-		line = line + str[cnt] - '0';
-		cnt++;
+		line_number = line_number * 10;
+		line_number = line_number + str[index] - '0';
+		index++;
 	}
 }

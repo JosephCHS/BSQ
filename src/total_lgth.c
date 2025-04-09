@@ -9,10 +9,9 @@
 
 int	find_tot_lgth(int *array_int)
 {
-	int cnt = 0;
+	int counter = 0;
 
-	while (array_int[cnt] != -2) {
-		cnt++;
-	}
-	return (cnt);
+	while (array_int[counter] != -2)
+		counter++;
+	return (counter);
 }

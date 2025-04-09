@@ -9,67 +9,67 @@
 
 int	*find_square(int *array, int intlgth, char *buf2)
 {
-	int cnt = intlgth;
-	int sq = intlgth;
+	int index = intlgth;
+	int square_size = intlgth;
 	int position = 0;
-	int big_nb = 0;
+	int biggest_number = 0;
 
-	while (array[cnt] != -2) {
-		if (array[cnt] == 1 && (cnt % (intlgth)) != 0) {
-			array[cnt] = array[cnt - 1] + 1;
-			array = who_is_min(cnt, sq, array);
+	while (array[index] != -2) {
+		if (array[index] == 1 && (index % (intlgth)) != 0) {
+			array[index] = array[index - 1] + 1;
+			array = who_is_min(index, square_size, array);
 		}
-		cnt++;
+		index++;
 	}
-	big_nb = find_the_big_nb(array, &position);
-	draw_the_result(big_nb, position, intlgth, buf2);
+	biggest_number = find_the_big_nb(array, &position);
+	draw_the_result(biggest_number, position, intlgth, buf2);
 	return (array);
 }
 
-int	*who_is_min(int cnt, int sq, int *array)
+int	*who_is_min(int index, int square_size, int *array)
 {
-	if (array[cnt - sq - 1] < array[cnt])
-		array[cnt] = array[cnt - sq - 1] + 1;
-	if (array[cnt - sq] < array[cnt])
-		array[cnt] = array[cnt - sq] + 1;
+	if (array[index - square_size - 1] < array[index])
+		array[index] = array[index - square_size - 1] + 1;
+	if (array[index - square_size] < array[index])
+		array[index] = array[index - square_size] + 1;
 	return (array);
 }
 
 int	find_the_big_nb(int *array, int *position)
 {
-	int cnt = 0;
-	int big_nb = array[cnt];
+	int index = 0;
+	int biggest_number = array[index];
 
-	while (array[cnt] != -2) {
-		if (array[cnt] > big_nb)
-			big_nb = array[cnt];
-		cnt++;
+	while (array[index] != -2) {
+		if (array[index] > biggest_number)
+			biggest_number = array[index];
+		index++;
 	}
-	cnt = 0;
-	while (array[cnt] != big_nb) {
+	index = 0;
+	while (array[index] != biggest_number) {
 		(*position)++;
-		cnt++;
+		index++;
 	}
 	(*position)++;
-	return (big_nb);
+	return (biggest_number);
 }
 
-void	draw_the_result(int big_num, int position, int intlgth, char *buf2)
+void	draw_the_result(int square_size, int position, int intlgth, char *buf2)
 {
-	int tmp_h = big_num;
-	int tmp_l = big_num;
-	int cnt = 0;
+	int height = square_size;
+	int width = square_size;
+	int string_length = 0;
 
-	while (tmp_h > 0) {
-		while (tmp_l > 0) {
-			buf2[position - tmp_l] = 'x';
-			tmp_l--;
+	while (height > 0) {
+		while (width > 0) {
+			buf2[position - width] = 'x';
+			width--;
 		}
 		position = position - intlgth;
-		tmp_l = big_num;
-		tmp_h = tmp_h - 1;
+		width = square_size;
+		height = height - 1;
 	}
-	while (buf2[cnt] != '\0')
-		cnt++;
-	write(1, buf2, cnt);
+	while (buf2[string_length] != '\0')
+		string_length++;
+	write(1, buf2, string_length);
 }
